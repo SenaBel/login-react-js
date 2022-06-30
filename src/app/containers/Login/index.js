@@ -1,4 +1,4 @@
-import React, {useState, useContext, Component} from 'react'
+import React, {useState, useContext, useEffect, Component} from 'react'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -9,6 +9,7 @@ import Button from "../../components/Button/Simples";
 import Alert from '../../components/Alert/Danger'
 
 import {AuthContext} from '../../../contexts/auth'
+
 
 
 
@@ -27,7 +28,12 @@ const Login = () => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorForm, setErrorForm] = useState("");
 
-
+  const api =  (process.env.PUBLIC_URL) ? "https://api.login.abelsena.com" : "http://localhost:3000"
+  const versao = "v1"
+  useEffect(() => {
+    console.log('eu hoje teste', `${api}/${versao}`)
+   
+  }, [])
 
   const onChangeEmail = (ev) => {
     setEmail(ev.target.value)
@@ -78,7 +84,7 @@ const Login = () => {
             <Input
               label="E-mail"
               value={email}
-              type=""
+              type="email"
               error={`${!email ? errorEmail : ""}`}
               onChange={(e) => onChangeEmail( e)}
             />
@@ -102,9 +108,9 @@ const Login = () => {
                 {/* <Link to="/recuperar-senha">
                   <small>Esqueci minha senha</small>
                 </Link> */}
-                <a href='/'>
-                  <small>Esqueci minha senha</small>
-                </a>
+                <a href={`${api}/${versao}/api/usuarios/recuperar-senha`}>
+                <small>Esqueci minha senha</small>
+              </a>
               </div>
             </div>
             <br />
