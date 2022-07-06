@@ -28,7 +28,7 @@ const Login = () => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorForm, setErrorForm] = useState("");
 
-  const api =  (process.env.PUBLIC_URL) ? "https://api.login.abelsena.com" : "http://localhost:3000"
+  const api =  (process.env.PUBLIC_URL) ? "http://44.202.120.87:3000" : "http://44.202.120.87:3000"
   const versao = "v1"
   useEffect(() => {
     console.log('eu hoje teste', `${api}/${versao}`)
@@ -108,7 +108,7 @@ const Login = () => {
                 {/* <Link to="/recuperar-senha">
                   <small>Esqueci minha senha</small>
                 </Link> */}
-                <a href={`${api}/${versao}/api/usuarios/recuperar-senha`}>
+                <a href={`${api}/${versao}/api/usuarios/recuperar-senha`} target="_blank">
                 <small>Esqueci minha senha</small>
               </a>
               </div>
