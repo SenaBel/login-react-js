@@ -28,7 +28,7 @@ const Login = () => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorForm, setErrorForm] = useState("");
 
-  const api =  (process.env.PUBLIC_URL) ? "http://44.202.120.87:3000" : "http://44.202.120.87:3000"
+  const api =  (process.env.PUBLIC_URL) ? "http://54.162.62.77:3000" : "http://54.162.62.77:3000"
   const versao = "v1"
   useEffect(() => {
     console.log('eu hoje teste', `${api}/${versao}`)
