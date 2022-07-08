@@ -73,7 +73,7 @@ const Login = () => {
           <form className="Card" onSubmit={handleSubmit}>
             <div className="flex vertical flex-center">
               <Titulo tipo="h1" titulo="Login de Teste" />
-              <p>Faça o seu login abaixo</p>
+              <p>Faça o seu login abaixo!</p>
               <p>{String(authenticated)}</p>
             </div>
             <br />
