@@ -28,7 +28,7 @@ const Login = () => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorForm, setErrorForm] = useState("");
 
-  const api =  (process.env.PUBLIC_URL) ? "http://35.175.143.49:3000" : "http://35.175.143.49:3000"
+  const api =  (process.env.PUBLIC_URL) ? "https://api.abelsena.com.br/" : "https://api.abelsena.com.br/"
   const versao = "v1"
   useEffect(() => {
     console.log('eu hoje teste', `${api}/${versao}`)
@@ -73,7 +73,7 @@ const Login = () => {
           <form className="Card" onSubmit={handleSubmit}>
             <div className="flex vertical flex-center">
               <Titulo tipo="h1" titulo="Login de Teste" />
-              <p>Faça o seu login abaixo!!!</p>
+              <p>Digite seu Login!</p>
               <p>{String(authenticated)}</p>
             </div>
             <br />

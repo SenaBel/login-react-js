@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-  baseURL: (process.env.PUBLIC_URL) ? "http://35.175.143.49:3000" : "http://35.175.143.49:3000"
+  baseURL: (process.env.PUBLIC_URL) ? "https://api.abelsena.com.br/" : "https://api.abelsena.com.br/"
 }) 
 export const versao = "v1"
 
