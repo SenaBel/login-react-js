@@ -3,8 +3,10 @@ import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom
 
 import Login from './containers/Login'
 import Restrita from './containers/Restrita'
+import RegistroUsuario from './containers/RegistroUsuario'
 
 import {AuthProvider, AuthContext} from '../../src/contexts/auth'
+import Header from './components/Header'
 
 
 const AppRoutes = () => {
@@ -24,7 +26,8 @@ const AppRoutes = () => {
            <AuthProvider>
            <Routes>
            <Route path="/login" element={<Login/>} />
-           <Route path="/" element={<Private> <Restrita/> </Private>} />
+           <Route path="/" element={ <Private> <Header/><Restrita/></Private>} />
+           <Route path="/registro-user" element={<Private> <Header/> <RegistroUsuario/> </Private>} />
            </Routes>
            </AuthProvider>
        </Router>

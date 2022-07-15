@@ -18,17 +18,20 @@ const errorHandling = (error) => {
 
 export const createSession = async ({email, password}, callback) => {
     return api.post(`/${versao}/api/usuarios/login`, {email, password})
-    // .then((response) => {
-    //   console.log('Esse é o kara>>>>', response.data)
-    // })
-    //.catch(errorHandling)
+
     .catch((e) => {
       callback(errorHandling(e)) 
       console.log('Valor do Callback', callback(errorHandling(e)))
     } )
-    // {
-    //   const error = errorHandling(e)
-    //   console.log('Não deu certo error ', error)
-    //   callback(error)
-    // })
+
+}
+
+export const createUserSession = async ({nome, email, password}, callback) => {
+  return api.post(`/${versao}/api/usuarios/registrar`, {nome, email, password})
+
+  .catch((e) => {
+    callback(errorHandling(e)) 
+    console.log('Valor do Callback', callback(errorHandling(e)))
+  } )
+
 }

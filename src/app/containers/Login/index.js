@@ -10,9 +10,6 @@ import Alert from '../../components/Alert/Danger'
 
 import {AuthContext} from '../../../contexts/auth'
 
-
-
-
 // const validationLogin = yup.object().shape({
 //   email: yup.string().required(),
 //   password:yup.string().required()

@@ -161,7 +161,7 @@ table.simples th:last-child {
 }
 
 .button-success {
-  background-color: var(--cor-secundaria);
+  background-color: #40E0D0;
   color: var(--cor-branca);
   border: 0;
 }

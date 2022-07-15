@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {api, versao,createSession} from '../app/services/api'
+import {api, versao,createSession, createUserSession} from '../app/services/api'
 
 export const AuthContext = createContext()
 
@@ -40,6 +40,13 @@ export const AuthProvider = ({children}) => {
       
     }
 
+    const createUser = async(nome, email, password) => {
+        const response = await createUserSession(nome, email, password)
+      if(response){
+          alert('Sucesso')
+      }
+    }
+
     const logout = () => {
         console.log('logout');
         localStorage.removeItem('user')
@@ -50,7 +57,7 @@ export const AuthProvider = ({children}) => {
     }
     return(
         <AuthContext.Provider 
-        value={{authenticated: !!user, user, loading, login, logout }}
+        value={{authenticated: !!user, user, loading, login, logout, createUser }}
         >
             {children}
         </AuthContext.Provider>
