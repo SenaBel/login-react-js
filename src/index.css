@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --cor-tema: rgb(7, 7, 114);
   --cor-tema-claro: rgb(27, 79, 169);
 
@@ -12,7 +12,7 @@
   --cor-cinza-claro: #EEE;
   --cor-cinza-escuro: #222;
   --cor-cinza-medio: #888;
-}
+} */
 
 body {
   margin: 0;
@@ -113,13 +113,13 @@ body {
   border-radius: 10px;
   width: 80%;
 }
-.Pesquisa button {
+/* .Pesquisa button {
   margin-left: -40px;
   background-color: transparent;
   font-size: 1.1rem;
   border: 0;
   cursor: pointer;
-}
+} */
 
 table.simples {
   margin-bottom: 50px;
@@ -145,7 +145,7 @@ table.simples th:last-child {
   border-bottom-right-radius: 10px;
 }
 
-.button {
+/* .button {
   font-size: 1rem;
   padding: 10px 15px;
   margin: 5px;
@@ -153,7 +153,7 @@ table.simples th:last-child {
   cursor: pointer;
   border-radius: 10px;
   font-weight: bold;
-}
+} */
 .button-small {
   font-size: 0.8rem;
   padding: 5px 8px;
@@ -179,33 +179,13 @@ table.simples th:last-child {
 main {
   overflow-y: scroll;
 }
-main > div {
+/* main > div {
   margin-right: 20px;
-}
+} */
 
 .Paginacao {
   display: flex;
   justify-content: flex-end;
-}
-.paginacao-item {
-  font-size: 0.9rem;
-  color: var(--cor-cinza-escuro);
-  padding: 5px 10px;
-  border: 1px solid #cccc;
-  cursor: pointer;
-}
-.paginacao-item:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-.paginacao-item:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.paginacao-item:hover, .paginacao-item-active {
-  background-color: var(--cor-cinza-escuro);
-  color: var(--cor-cinza-claro);
-  border: 1px solid var(--cor-cinza-escuro);
 }
 
 .Link-Voltar { 
@@ -220,15 +200,18 @@ main > div {
   text-align: left;
 }
 .Input-Simples input, textarea {
+  outline: 0;
   padding: 8px 12px;
   margin: 5px 0;
   border-radius: 5px;
-  /* border: 1px solid var(--cor-cinza-medio); */
   font-size: 0.95rem;
-  /* background-color: #FFFF99; */
   border: 2px solid #7fd3d6;
   
 }
+.Input-Simples input:focus{
+  border: 2px solid rgb(142, 233, 245);
+}
+
 .input-success {
   border: 1px solid rgb(63, 225, 247);
   box-shadow: 0 0 7px #7fd3d6;
@@ -257,15 +240,11 @@ textarea {
   margin: 10px 0;
 }
 .Input-Valor input, .Input-Valor .input {
-  border: 1px solid var(--cor-cinza-medio);
   padding: 8px 12px;
   font-size: 0.95rem;
   border-radius: 10px;
 }
-.Input-Valor .input {
-  background-color: var(--cor-cinza-claro);
-  color: var(--cor-cinza-medio);
-}
+
 .Input-Valor .input-nostyle {
   display: flex;
   justify-content: center;

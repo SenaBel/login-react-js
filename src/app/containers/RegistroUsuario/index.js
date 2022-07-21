@@ -1,9 +1,10 @@
-import React, { Component, useContext } from 'react'
+import React, { useContext, useState} from 'react'
 import './styles.css'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {AuthContext} from '../../../contexts/auth'
+import Alert from 'react-bootstrap/Alert';
 
 
 const schema = yup.object({
@@ -14,20 +15,51 @@ const schema = yup.object({
   
 
 const RegistrarUsuario = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const {createUser } = useContext(AuthContext)
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
-    const {createUser } = useContext(AuthContext)
-    
+    const [errorForm, setErrorForm] = useState("");
+    const [sussForm, setSussForm] = useState("");
+
     const onSubmitForm = data =>{
-        createUser(data)
+        createUser(data, resposta  => {
+            if(resposta.status === 422){
+                setErrorForm(resposta.message)
+                setTimeout(() => {
+                    setErrorForm("")
+                },5000)
+            }
+            if(resposta.status === 200){
+                setSussForm(resposta.message)
+                reset()
+                setTimeout(() => {
+                    setSussForm("")
+                },5000)
+            }
+            console.log('VALOR DO ERROR', resposta.message)
+            console.log('Valores')
+     
+        })
         console.log('Valores', data)
     }
         return (
+            <>
+            
             <div className="Login flex flex-center">
             <form className="Card" onSubmit={handleSubmit(onSubmitForm)}>
+               
+                {errorForm && (
+                    <Alert variant="danger" > {errorForm} </Alert>
+                  ) 
+                }
+                {sussForm && (
+                     <Alert variant="success" > {sussForm} </Alert>
+                )}
+                
               <div className="flex vertical flex-center">
               <h2>Criar Novo Usuário</h2>
+           
               </div>
 
             <div className='field' >
@@ -39,7 +71,7 @@ const RegistrarUsuario = () => {
 
             <div className='field' >
 				<label>Email: 
-					<input type="email" {...register("email")}/>
+					<input type="email" {...register("email")} onClick={() => setErrorForm("") }/>
                     <p>{errors.email?.message}</p>
                 </label>
 			</div>
@@ -50,11 +82,11 @@ const RegistrarUsuario = () => {
                     <p>{errors.password?.message}</p>
                 </label>
 			</div>
-              <button type='submit'>SALVAR</button>
+              <button className="btt" type='submit'>SALVAR</button>
             </form>
           </div>
+    </>
         )
-    
 }
 
 export default RegistrarUsuario

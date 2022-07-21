@@ -1,23 +1,14 @@
-import React, {useState, useContext, useEffect, Component} from 'react'
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import React, {useState, useContext} from 'react'
 
 import Titulo from "../../components/Texto/Titulo";
 import Input from "../../components/Inputs/Simples";
-import Button from "../../components/Button/Simples";
 import Alert from '../../components/Alert/Danger'
 
 import {AuthContext} from '../../../contexts/auth'
 
-// const validationLogin = yup.object().shape({
-//   email: yup.string().required(),
-//   password:yup.string().required()
-
-// })
 //inicio
 const Login = () => {
-  const {authenticated, login} = useContext(AuthContext)
+  const {login} = useContext(AuthContext)
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -27,10 +18,7 @@ const Login = () => {
 
   const api =  (process.env.PUBLIC_URL) ? "https://api.abelsena.com.br" : "https://api.abelsena.com.br"
   const versao = "v1"
-  useEffect(() => {
-    console.log('eu hoje teste', `${api}/${versao}`)
-   
-  }, [])
+  
 
   const onChangeEmail = (ev) => {
     setEmail(ev.target.value)
@@ -46,7 +34,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     // email: !email ? setErrorEmail("Digite seu email...") : !password
 
     if (!email | !password) {
@@ -105,7 +92,7 @@ const Login = () => {
                 {/* <Link to="/recuperar-senha">
                   <small>Esqueci minha senha</small>
                 </Link> */}
-                <a href={`${api}/${versao}/api/usuarios/recuperar-senha`} target="_blank">
+                <a href={`${api}/${versao}/api/usuarios/recuperar-senha`} rel="noreferrer" target="_blank">
                 <small>Esqueci minha senha</small>
               </a>
               </div>
@@ -113,7 +100,7 @@ const Login = () => {
             <br />
             <br />
             <div className="flex flex-center Button">
-              <button className="button button-success"  rota="/restrita" label="Entrar">
+              <button className="btt"  rota="/restrita" label="Entrar">
                 Entrar
               </button>
             </div>

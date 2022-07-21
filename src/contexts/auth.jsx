@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {api, versao,createSession, createUserSession} from '../app/services/api'
+import {api, createSession, createUserSession} from '../app/services/api'
 
 export const AuthContext = createContext()
 
@@ -43,8 +43,10 @@ export const AuthProvider = ({children}) => {
     const createUser = async(nome, email, password) => {
         const response = await createUserSession(nome, email, password)
       if(response){
-          alert('Sucesso')
+          console.log('Resposta servidor register', response)
+          //alert('Sucesso')
       }
+    
     }
 
     const logout = () => {
