@@ -17,6 +17,7 @@ const Login = () => {
   const [errorForm, setErrorForm] = useState("");
 
   const api =  (process.env.PUBLIC_URL) ? "https://api.abelsena.com.br" : "https://api.abelsena.com.br"
+  //const api =  (process.env.PUBLIC_URL) ? "http://localhost:3000" : "http://localhost:3000"
   const versao = "v1"
   
 
@@ -56,7 +57,7 @@ const Login = () => {
         <div className="Login flex flex-center">
           <form className="Card" onSubmit={handleSubmit}>
             <div className="flex vertical flex-center">
-              <Titulo tipo="h1" titulo="Login de Teste" />
+              <Titulo tipo="h1" titulo="Estudando Programação" />
               <p>Digite seu Login...</p>
               {/* <p>{String(authenticated)}</p> */}
             </div>

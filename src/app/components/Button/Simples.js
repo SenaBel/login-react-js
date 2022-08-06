@@ -1,30 +1,25 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-const Button = ({type, onClick, label}) => {
-    return(
+const Button = ({ type, onClick, label }) => (
     <div className="Button">
-        <button 
+        <button
             onClick={onClick}
-            className={`button button-${type || 'default' }`}
-            >
-                {label}
+            className={`button button-${ type || 'default' }`} >
+            { label }
         </button>
     </div>
-    )
-}
-
+)
 
 const ButtonSimples = ({ type, rota, onClick, label }) => {
     if(rota){
-        return(
+        return (
             <Link to={rota}>
-                <Button type={type} onClick={onClick} label={label}/>
+                <Button type={type} onClick={onClick} label={label} />
             </Link>
-        ) 
-    } else{
-        <Button type={type} onClick={onClick} label={label}/>
-    }
+        );
+    } 
+    else return <Button type={type} onClick={onClick} label={label} />
 }
 
-export default ButtonSimples
+export default ButtonSimples;

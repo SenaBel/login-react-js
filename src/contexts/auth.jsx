@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {api, createSession, createUserSession} from '../app/services/api'
+import {api, createSession, createUserSession, getClientes, getCliente} from '../app/services/api'
 
 export const AuthContext = createContext()
 
@@ -46,8 +46,20 @@ export const AuthProvider = ({children}) => {
           console.log('Resposta servidor register', response)
           //alert('Sucesso')
       }
-    
     }
+
+    // const detalhesDoCliente = async(id) => {
+    //     const response = await getCliente(id)
+    //   console.log('Resposta Detalhes Hoje quinta', response) 
+    // }
+  
+
+    // const listClient = async (
+    //     // atual = 0, limit = 20, loja = "62d990fa26419b4a5b7a4281"
+    // ) => {
+    //     await getClientes()
+       
+    // }
 
     const logout = () => {
         console.log('logout');
@@ -59,7 +71,7 @@ export const AuthProvider = ({children}) => {
     }
     return(
         <AuthContext.Provider 
-        value={{authenticated: !!user, user, loading, login, logout, createUser }}
+        value={{authenticated: !!user, user, loading, login, logout, createUser, getClientes }}
         >
             {children}
         </AuthContext.Provider>

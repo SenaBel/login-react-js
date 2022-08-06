@@ -10,7 +10,8 @@ import Alert from 'react-bootstrap/Alert';
 const schema = yup.object({
     nome: yup.string().required("Nome é um campo é obrigatório."),
     email: yup.string().required("Email é um campo é obrigatório."),
-    password: yup.string().required("Senha é um campo é obrigatório.")
+    password: yup.string().required("Senha é um campo é obrigatório."),
+    loja: yup.string()
   }).required();
   
 
@@ -23,7 +24,12 @@ const RegistrarUsuario = () => {
     const [sussForm, setSussForm] = useState("");
 
     const onSubmitForm = data =>{
+        data.loja = "62d990fa26419b4a5b7a4281"
+        console.log('oioioi', data)
+ 
+        //data.loja = loja
         createUser(data, resposta  => {
+            //data.loja = "62d990fa26419b4a5b7a4281"
             if(resposta.status === 422){
                 setErrorForm(resposta.message)
                 setTimeout(() => {
