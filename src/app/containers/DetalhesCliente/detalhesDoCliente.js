@@ -3,63 +3,64 @@ import moment from "moment";
 import { getCliente} from '../../services/api'
 import {useParams} from 'react-router-dom'
 
-import Titulo from '../../components/Texto/Titulo';
 import ButtonSimples from '../../components/Button/Simples';
 import { TextoDados } from '../../components/Texto/Dados';
 import InputValor from '../../components/Inputs/InputValor';
 
+import ClockLoader from "react-spinners/ClockLoader"
 
-// import Voltar from '../../components/Links/Voltar';
-// import AlertGeral from '../../components/Alert/Geral'
-
-//const {detalhesDoCliente} = useContext(AuthContext)
-// useEffect(() => {
-//   console.log('adsf',detalhesDoCliente)
- 
-// },[])
-
-  
 const DetalhesCliente = () => {
-    const [dados, setDados] = useState([])
-    const {id} = useParams()
-  
-    console.log('Esse valor do Cliende pelo id:', dados)
-    const cliente = {
-      nome: dados.nome ? dados.nome : "" ,
-      CPF:  dados.cpf ? dados.cpf : "",
+  const {id} = useParams()
+  const [loading, setLoading] = useState(false);
+  const [dados, setDados] = useState([])
+
+  const cliente = {
+      nome: dados ? dados.nome : "",
+      CPF:  dados ? dados.cpf : "",
       telefone: dados ? dados.telefones : "",
       dataDeNascimento: dados ? moment(dados.dataDeNascimento).format("DD/MM/YYYY") : "",
       email: dados && dados.usuario ? dados.usuario.email : "",
 
-      endereco: "Rua teste, 125",
-      bairro: "Bairro Teste",
-      cidade: 'São Paulo',
-      estado: 'SP',
-      CEP: '14525-195',
-
+      endereco: dados.endereco ? `${dados.endereco.local}, ${dados.endereco.numero}` : "",
+      bairro: dados.endereco ? dados.endereco.bairro :  "",
+      cidade: dados.endereco ? dados.endereco.cidade : "",
+      estado: dados.endereco ? dados.endereco.estado : "",
+      CEP: dados.endereco ? dados.endereco.CEP : "",
     }
-    //console.log('valores do cliente state', cliente)
-useEffect(() => {
-  (async () => {
-      const resList = await getCliente(id)
-      //console.log('Value of Client List- Detalhes Pedido', resList.data)
-      setDados(resList.data.cliente )
 
-  })()
-},[])
+    useEffect(() => {
+      (async () => {
+        const resList = await getCliente(id)
+        const data = resList.data.cliente
+        setDados(data)
+        console.log('Value of Client List- Detalhes Cliente', data)
+        
+      })()
+    },[])
 
+   useEffect(() => {
+      setLoading(true)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000)
+   }, [])
+    
+
+
+   
 
 const handleSubmit = (fild, value) => {
   setDados({[fild]: value})
 }
 
+
+
   const renderCabecalho = () => {
     return (
-       
+     
       <div className="flex">
         <div className="flex-1 flex">
          <h3>{ cliente.nome}</h3>
-          {/* <Titulo tipo="h7" titulo={nome} /> */}
         </div>
 
           <div className="flex-1 flex flex-end">
@@ -83,17 +84,18 @@ const handleSubmit = (fild, value) => {
   }
 
   const renderDetalhesCadastro = () => {
+  
     return (
       <div className="Detalhes-do-Cadastro">
         <TextoDados
           chave="Nome"
           valor={
             <InputValor
-              name="nome"
+              name="Nome"
               noStyle
-              erro=''
-              handleSubmit={(valor) => handleSubmit("nome", valor)}
-              value={cliente.nome}
+              erro='asdf'
+              handleSubmit={(valor) => handleSubmit("Nome", valor)}
+              value= {cliente.nome}
             />
           }
         />
@@ -103,8 +105,8 @@ const handleSubmit = (fild, value) => {
             <InputValor
               name="cpf"
               noStyle
-              erro=''
-              handleSubmit={(valor) => handleSubmit("CPF", valor)}
+              erro='asdf'
+              handleSubmit={(valor) => handleSubmit("cpf", valor)}
               value={cliente.CPF}
             />
           }
@@ -113,9 +115,9 @@ const handleSubmit = (fild, value) => {
           chave="Telefone"
           valor={
             <InputValor
-              name="telefone"
+              name="Telefone"
               noStyle
-              erro=''
+              erro='asdf'
               handleSubmit={(valor) => handleSubmit("telefone", valor)}
               value={cliente.telefone}
             />
@@ -127,7 +129,7 @@ const handleSubmit = (fild, value) => {
             <InputValor
               name="email"
               noStyle
-              erro=''
+              erro='asdf'
               handleSubmit={(valor) => handleSubmit("email", valor)}
               value={cliente.email}
             />
@@ -137,9 +139,9 @@ const handleSubmit = (fild, value) => {
           chave="Data de Nascimento"
           valor={
             <InputValor
-              name="datadenascimento"
+              name="dataDeNascimento"
               noStyle
-              erro=''
+              erro='asdf'
               handleSubmit={(valor) =>  handleSubmit("dataDeNascimento", valor)}
               value={cliente.dataDeNascimento}
             />
@@ -231,9 +233,17 @@ const handleSubmit = (fild, value) => {
 
 
   //const render() {
+    
     return (
-      <div className="DetalhescarDoCliente">
+      
        
+      <div className="DetalhescarDoCliente">
+         {
+          loading ? 
+          <ClockLoader color={"#36D7B7"} loading={loading}  size={150} />
+          :
+        
+        <div className="DetalhescarDoCliente">
         {renderCabecalho()}
       
         <div className="flex horizontal">
@@ -244,9 +254,13 @@ const handleSubmit = (fild, value) => {
             {renderDetalhesEntrega()}
           </div>
         </div>
+
       </div>
-    );
- // }
+}
+      </div>
+        
+    )
+  
 }
 
 export default DetalhesCliente;

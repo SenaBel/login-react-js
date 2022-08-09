@@ -6,6 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Pesquisa from '../../components/Inputs/Pesquisa'
 import Tabela from '../../components/Tabela/Simples';
 import Paginacao from '../../components/Paginacao/Simples';
+import ClockLoader from "react-spinners/ClockLoader"
 
 const Clientes = () => {
     const [dados, setDados] = useState([])
@@ -14,6 +15,7 @@ const Clientes = () => {
     const [resCliente, setResCliente] = useState()
     const [limit, setLimit] = useState(2);
     const [finishedTimeout, setFinishedTimeout] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 useEffect(() => {
     (async () => {
@@ -21,6 +23,7 @@ useEffect(() => {
         const resPesquisa = await getClientesPesquisa(pesquisa, atual, limit)
         setResCliente(resPesquisa.data.clientes)
         setDados(resPesquisa.data.clientes.docs )
+        console.log("pesquisa hoje 08", dados)
       }
       else{
         const resList = await getClientes(atual, limit)
@@ -38,6 +41,13 @@ useEffect(() => {
     return () => clearTimeout(id)
 }, []);
 
+useEffect(() => {
+  setLoading(true)
+  setTimeout(() => {
+    setLoading(false)
+  }, 2000)
+}, [])
+
 const clientes = []
   dados.map((item) => {
       clientes.push({
@@ -52,7 +62,14 @@ const clientes = []
 const  changeNumeroAtual = (atual)  => {setAtual(atual,  () =>  getClientes())}
     
     return(
-      <div  className="flex flex-center">
+      <div  className="flex flex-center"> 
+       
+         {
+          loading ?
+          <div style={{width:'60%'}} className="Card">
+          <ClockLoader color={"#36D7B7"} loading={loading}  size={150} />
+          </div>
+          :
           <div style={{width:'60%'}} className="Card">
             <div className="">
               <h2>Meus Clientes</h2>
@@ -63,12 +80,15 @@ const  changeNumeroAtual = (atual)  => {setAtual(atual,  () =>  getClientes())}
         onChange={(e) => setPesquisa(e.target.value)}
         //onClick={() => handleSubmitPesquisa()} 
       />
+      
            <br/> 
       {!resCliente && (
         finishedTimeout &&
         <Alert variant="warning" > Nenhum Registro Encontrado... </Alert>
         ) 
       }
+
+      
       <Tabela 
         cabecalho={["Cliente", "E-mail", "Telefone", "CPF"]}
         dados={clientes}
@@ -81,6 +101,7 @@ const  changeNumeroAtual = (atual)  => {setAtual(atual,  () =>  getClientes())}
       /> 
 
       </div>
+}
     </div>
     
     )

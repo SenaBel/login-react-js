@@ -16,16 +16,18 @@ class InputValor extends Component {
     }
 
     renderForm(){
+
         const { value } = this.state;
-       // const { erro } = this.props;
+        //const { erro } = this.props;
         return (
             <div className="Input-Valor flex input-valor-open">
-                <div >
+                <div className="flex vertical">
                     <input  
                         value={value}
                         onChange={this.onChange}
                         name={this.props.name} 
                         />
+                        {/* { erro && (<small className="small-danger">{erro}</small>) } */}
                 </div>
                 <div className="flex flex-center">
                     <ButtonSimples 
@@ -62,8 +64,13 @@ class InputValor extends Component {
 
     render(){
         const { form } = this.state;
-        return (form) ? this.renderForm() : this.renderValue();
+        return (
+        (form) 
+            ? this.renderForm()
+            : this.renderValue()
+        ) 
     }
+    
 }
 
 export default InputValor;
