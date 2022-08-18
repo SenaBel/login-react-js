@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, useCallback} from 'react';
 import moment from "moment";
 import { getCliente} from '../../services/api'
 import {useParams} from 'react-router-dom'
@@ -9,34 +9,65 @@ import InputValor from '../../components/Inputs/InputValor';
 
 import ClockLoader from "react-spinners/ClockLoader"
 
+const initialCliente = [{
+  nome:  "",
+  CPF:   "",
+  telefone:  [],
+  dataDeNascimento: "",
+  email: ""
+}]
+
+const initialEndereco = {
+  local: "",
+  bairro: "",
+  cidade: "",
+  estado: "",
+  CEP:  "",
+}
+
+
 const DetalhesCliente = () => {
+
   const {id} = useParams()
+  const [dataCliente, setDataCliente] = useState(initialCliente)
+  const [dataEndereco, setDataEndereco] = useState(initialEndereco)
   const [loading, setLoading] = useState(false);
-  const [dados, setDados] = useState([])
+
+  console.log('DADOS DO CLIENTE', dataCliente)
+  console.log('DADOS DO ENDEREÇO', dataEndereco)
 
   const cliente = {
-      nome: dados ? dados.nome : "",
-      CPF:  dados ? dados.cpf : "",
-      telefone: dados ? dados.telefones : "",
-      dataDeNascimento: dados ? moment(dados.dataDeNascimento).format("DD/MM/YYYY") : "",
-      email: dados && dados.usuario ? dados.usuario.email : "",
-
-      endereco: dados.endereco ? `${dados.endereco.local}, ${dados.endereco.numero}` : "",
-      bairro: dados.endereco ? dados.endereco.bairro :  "",
-      cidade: dados.endereco ? dados.endereco.cidade : "",
-      estado: dados.endereco ? dados.endereco.estado : "",
-      CEP: dados.endereco ? dados.endereco.CEP : "",
+      nome: dataCliente ? dataCliente.nome : "",
+      CPF:  dataCliente ? dataCliente.cpf : "",
+      telefone: dataCliente ? dataCliente.telefones : "",
+      dataDeNascimento: dataCliente ? moment(dataCliente.dataDeNascimento).format("DD/MM/YYYY") : "",
+      email: dataCliente && dataCliente.usuario ? dataCliente.usuario.email : "",
+    }
+  const enderecoCliente= {
+      local: dataEndereco && dataEndereco ? dataEndereco.local : "",
+      bairro: dataEndereco && dataEndereco ? dataEndereco.bairro :  "",
+      cidade: dataEndereco && dataEndereco ? dataEndereco.cidade : "",
+      estado: dataEndereco && dataEndereco ? dataEndereco.estado : "",
+      CEP: dataEndereco && dataEndereco? dataEndereco.CEP : "",
     }
 
+    const fetchData = useCallback(async () => {
+      const resList = await getCliente(id)
+      const dadosCliente = resList.data
+      const dadosEntrega = resList.data.cliente.endereco
+      if(dadosCliente){
+        setDataCliente((prev) => ({...prev, ...dadosCliente.cliente}))
+      }
+      if(dadosEntrega){
+        setDataEndereco((prev) => ({...prev, ...dadosEntrega}))
+      }
+     
+    }, [])
+ 
     useEffect(() => {
-      (async () => {
-        const resList = await getCliente(id)
-        const data = resList.data.cliente
-        setDados(data)
-        console.log('Value of Client List- Detalhes Cliente', data)
-        
-      })()
-    },[])
+      fetchData()
+    },[fetchData])
+   
 
    useEffect(() => {
       setLoading(true)
@@ -45,24 +76,26 @@ const DetalhesCliente = () => {
       }, 1000)
    }, [])
     
-
-
-   
-
-const handleSubmit = (fild, value) => {
-  setDados({[fild]: value})
+const handleSubmit = (name, value) => {
+  let obj = {[name] : value}
+  setDataCliente((prev) => ({...prev, ...obj}))
 }
 
-
+const handleSubmitEndereco = (name, value) => {
+  let obj = {[name] : value}
+  setDataEndereco((prev) => ({...prev, ...obj}))
+}
+    
 
   const renderCabecalho = () => {
+ 
     return (
      
       <div className="flex">
         <div className="flex-1 flex">
-         <h3>{ cliente.nome}</h3>
+         <h3>{dataCliente.nome}</h3>
         </div>
-
+       
           <div className="flex-1 flex flex-end">
             <ButtonSimples
               rota='/detalhe-cliente'
@@ -89,83 +122,83 @@ const handleSubmit = (fild, value) => {
       <div className="Detalhes-do-Cadastro">
         <TextoDados
           chave="Nome"
-          valor={
+          valor={(
             <InputValor
-              name="Nome"
+              name="nome"
               noStyle
-              erro='asdf'
-              handleSubmit={(valor) => handleSubmit("Nome", valor)}
+              //erro='asdf'
+              handleSubmit={(valor) => handleSubmit("nome", valor)}
               value= {cliente.nome}
             />
-          }
+          )}
         />
         <TextoDados
           chave="CPF"
-          valor={
+          valor={(
             <InputValor
               name="cpf"
               noStyle
-              erro='asdf'
+              //erro='asdf'
               handleSubmit={(valor) => handleSubmit("cpf", valor)}
-              value={cliente.CPF}
+              value={ cliente.CPF}
             />
-          }
+          )}
         />
         <TextoDados
           chave="Telefone"
-          valor={
+          valor={(
             <InputValor
-              name="Telefone"
+              name="telefones"
               noStyle
-              erro='asdf'
-              handleSubmit={(valor) => handleSubmit("telefone", valor)}
-              value={cliente.telefone}
+              //erro='asdf'
+              handleSubmit={(valor) => handleSubmit("telefones", valor)}
+              value={ cliente.telefone}//cliente?.telefone?.length > 0 ? cliente.telefone[0] : ""}
             />
-          }
+          )}
         />
         <TextoDados
           chave="E-mail"
-          valor={
+          valor={(
             <InputValor
               name="email"
               noStyle
-              erro='asdf'
+              //erro='asdf'
               handleSubmit={(valor) => handleSubmit("email", valor)}
               value={cliente.email}
             />
-          }
+          )}
         />
         <TextoDados
           chave="Data de Nascimento"
-          valor={
+          valor={(
             <InputValor
               name="dataDeNascimento"
               noStyle
-              erro='asdf'
+              //erro='asdf'
               handleSubmit={(valor) =>  handleSubmit("dataDeNascimento", valor)}
               value={cliente.dataDeNascimento}
             />
-          }
+          )}
         />
       </div>
     );
   }
 
   const renderDetalhesEntrega = () => {
-    //const { endereco, bairro, cidade, estado, CEP} = this.state;
+   
     return (
       <div className="Detalhes-da-Entrega">
         <TextoDados
           chave="Endereço"
-          valor={
+          valor={(
             <InputValor
-              name="endereco"
+              name="local"
               noStyle
-              
-              handleSubmit={(valor) => handleSubmit("endereco", valor)}
-              value={cliente.endereco}
+              //erro='asdf'
+              handleSubmit={(valor) => handleSubmitEndereco("local", valor)}
+              value={enderecoCliente.local}
             />
-          }
+          )}
         />
         {/* <TextoDados
           chave="Numero"
@@ -181,51 +214,51 @@ const handleSubmit = (fild, value) => {
         /> */}
         <TextoDados
           chave="Bairro"
-          valor={
+          valor={(
             <InputValor
               name="bairro"
               noStyle
-             
-              handleSubmit={(valor) => handleSubmit("bairro", valor)}
-              value={cliente.bairro}
+              //erro='asdf'
+              handleSubmit={(valor) => handleSubmitEndereco("bairro", valor)}
+              value={enderecoCliente.bairro}
             />
-          }
+          )}
         />
         <TextoDados
           chave="Cidade"
-          valor={
+          valor={(
             <InputValor
               name="cidade"
               noStyle
-           
-              handleSubmit={(valor) => handleSubmit("cidade", valor)}
-              value={cliente.cidade}
+              //erro='asdf'
+              handleSubmit={(valor) => handleSubmitEndereco("cidade", valor)}
+              value={enderecoCliente.cidade}
             />
-          }
+          )}
         />
         <TextoDados
           chave="Estado"
-          valor={
+          valor={(
             <InputValor
               name="estado"
               noStyle
-          
-              handleSubmit={(valor) => handleSubmit("estado", valor)}
-              value={cliente.estado}
+              //erro='asdf'
+              handleSubmit={(valor) => handleSubmitEndereco("estado", valor)}
+              value={enderecoCliente.estado}
             />
-          }
+          )}
         />
         <TextoDados
           chave="CEP"
-          valor={
+          valor={(
             <InputValor
-              name="cep"
+              name="CEP"
               noStyle
-          
-              handleSubmit={(valor) => handleSubmit("cep", valor)}
-              value={cliente.CEP}
+              //erro='df'
+              handleSubmit={(valor) => handleSubmitEndereco("CEP", valor)}
+              value={enderecoCliente.CEP}
             />
-          }
+          )}
         />
       </div>
     );

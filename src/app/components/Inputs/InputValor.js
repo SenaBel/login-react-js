@@ -3,31 +3,103 @@ import ButtonSimples from '../Button/Simples';
 
 class InputValor extends Component {
     state = {
+        // data:{
+        //     nome:  "",
+        //     CPF:   "",
+        //     telefone:  "",
+        //     dataDeNascimento: "",
+        //     email: "",
+    
+        //     endereco:  "",
+        //     bairro: "",
+        //     cidade: "",
+        //     estado: "",
+        //     CEP:  "",
+        // },
         value: this.props.value,
         form: false
     }
 
-    onChange = (ev) => this.setState({ value: ev.target.value })
-    toggleForm = () => this.setState({ form: !this.state.form, value: this.props.value })
+    onChange = (ev) => { this.setState({ value: ev.target.value })}
+        //console.log("Valor do onChange oioi", ev);
+        // obj ={}  //[ev.target.name] : ev.target.value
+       // console.log('Valor do obj Antes', obj)
+        
+        // if(ev.target.name === 'nome' ){
+        //     obj.nome = ev.target.value
+        // }
+
+
+        // if(ev.target.name === 'cpf' ){
+        //     obj.cpf = ev.target.value
+        // }
+
+
+        // if(ev.target.name === 'telefone' ){
+        //     obj.telefone = ev.target.value
+        // }
+
+        // if(ev.target.name === 'email' ){
+        //     obj.email = ev.target.value
+        // }
+
+        // if(ev.target.name === 'dataDeNascimento' ){
+        //     obj.dataDeNascimento = ev.target.value
+        // }
+
+        // if(ev.target.name === 'endereco' ){
+        //     obj.endereco = ev.target.value
+        // }
+
+        // if(ev.target.name === 'bairro' ){
+        //     obj.bairro = ev.target.value
+        // }
+
+        // if(ev.target.name === 'cidade' ){
+        //     obj.cidade = ev.target.value
+        // }
+
+        // if(ev.target.name === 'estado' ){
+        //     obj.estado = ev.target.value
+        // }
+
+        // if(ev.target.name === 'CEP' ){
+        //     obj.CEP = ev.target.value
+        // }
+
+        // console.log('Valor do obj Depois', obj)
+
+       
+            
+                
+            
+            //value: ev.target.value
+       
+
+   // } 
+    toggleForm = () => this.setState({ form: !this.state.form, value: this.props.value})
 
     handleSubmit(value){
-        this.props.handleSubmit(value);
-        this.toggleForm();
+      
+         this.props.handleSubmit(value);
+         this.toggleForm();
     }
 
     renderForm(){
 
         const { value } = this.state;
-        //const { erro } = this.props;
+        const { erro } = this.props;
         return (
             <div className="Input-Valor flex input-valor-open">
                 <div className="flex vertical">
                     <input  
                         value={value}
+                        //onChange={(e) => {this.onChange(e)}}
                         onChange={this.onChange}
                         name={this.props.name} 
+                        type={ this.props.type || "text" }
                         />
-                        {/* { erro && (<small className="small-danger">{erro}</small>) } */}
+                        { erro && (<small className="small-danger">{erro}</small>) }
                 </div>
                 <div className="flex flex-center">
                     <ButtonSimples 
@@ -46,29 +118,28 @@ class InputValor extends Component {
     }
 
     renderValue(){
-        const { value } = this.state;
+        const { value, erro } = this.props;
         return (
             <div className="flex vertical">
                 <div className="Input-Valor flex" onClick={() => this.toggleForm()}>
                     <span className={this.props.noStyle ? "input-nostyle" : "input"}>{value}</span>
-                    <div className="flex flex-center" style={{marginLeft: '15px'}}>
+                    <div className="flex flex-center" >
                         <ButtonSimples 
                             type="warning button-small" 
                             label={(<i className="fas fa-edit" />)} />
                     </div>
                 </div>
-                {/* { erro && (<small className="small-danger">{erro}</small>) } */}
+                { erro && (<small className="small-danger">{erro}</small>) }
             </div>
         )
     }
 
     render(){
         const { form } = this.state;
-        return (
-        (form) 
-            ? this.renderForm()
-            : this.renderValue()
-        ) 
+        return (form)  ? this.renderForm() : this.renderValue()
+           
+            
+        
     }
     
 }
