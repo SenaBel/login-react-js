@@ -3,88 +3,18 @@ import ButtonSimples from '../Button/Simples';
 
 class InputValor extends Component {
     state = {
-        // data:{
-        //     nome:  "",
-        //     CPF:   "",
-        //     telefone:  "",
-        //     dataDeNascimento: "",
-        //     email: "",
-    
-        //     endereco:  "",
-        //     bairro: "",
-        //     cidade: "",
-        //     estado: "",
-        //     CEP:  "",
-        // },
         value: this.props.value,
         form: false
     }
 
     onChange = (ev) => { this.setState({ value: ev.target.value })}
-        //console.log("Valor do onChange oioi", ev);
-        // obj ={}  //[ev.target.name] : ev.target.value
-       // console.log('Valor do obj Antes', obj)
-        
-        // if(ev.target.name === 'nome' ){
-        //     obj.nome = ev.target.value
-        // }
-
-
-        // if(ev.target.name === 'cpf' ){
-        //     obj.cpf = ev.target.value
-        // }
-
-
-        // if(ev.target.name === 'telefone' ){
-        //     obj.telefone = ev.target.value
-        // }
-
-        // if(ev.target.name === 'email' ){
-        //     obj.email = ev.target.value
-        // }
-
-        // if(ev.target.name === 'dataDeNascimento' ){
-        //     obj.dataDeNascimento = ev.target.value
-        // }
-
-        // if(ev.target.name === 'endereco' ){
-        //     obj.endereco = ev.target.value
-        // }
-
-        // if(ev.target.name === 'bairro' ){
-        //     obj.bairro = ev.target.value
-        // }
-
-        // if(ev.target.name === 'cidade' ){
-        //     obj.cidade = ev.target.value
-        // }
-
-        // if(ev.target.name === 'estado' ){
-        //     obj.estado = ev.target.value
-        // }
-
-        // if(ev.target.name === 'CEP' ){
-        //     obj.CEP = ev.target.value
-        // }
-
-        // console.log('Valor do obj Depois', obj)
-
-       
-            
-                
-            
-            //value: ev.target.value
-       
-
-   // } 
     toggleForm = () => this.setState({ form: !this.state.form, value: this.props.value})
 
     handleSubmit(value){
-      
          this.props.handleSubmit(value);
          this.toggleForm();
     }
-
+    
     renderForm(){
 
         const { value } = this.state;
